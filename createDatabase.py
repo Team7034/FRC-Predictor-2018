@@ -44,7 +44,8 @@ print("teams got")
 
 #fetch every match from 2018 on TBA and insert into db
 #also
-for i in range(6, 15):
+num = 0;
+for i in range(15):
 	for team in teams[i]:	#cycle through each team
 		matches = tba.team_matches(team["team_number"], year=2018)
 
@@ -105,7 +106,7 @@ for i in range(6, 15):
 				int(match["alliances"]["blue"]["team_keys"][0][3:]),
 				int(match["alliances"]["blue"]["team_keys"][1][3:]),
 				int(match["alliances"]["blue"]["team_keys"][2][3:]),
-				match["alliances"]["red"]["score"])
+				match["alliances"]["blue"]["score"])
 
 			cur.execute("INSERT OR IGNORE INTO matches VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ", q)
 		if len(matches) != 0:
@@ -123,6 +124,8 @@ for i in range(6, 15):
 			a = (team["team_number"], autoLine, autoSwitch, autoScale, teleSwitch, teleScale, oppoSwitch, exchange, climb, fouls, techFouls)
 
 			cur.execute("INSERT OR IGNORE INTO teams VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", a)
+		num += 1
+		print(num)
 
 	print(100*(i+1)/15, " percent done.")
 
